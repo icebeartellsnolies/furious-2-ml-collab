@@ -1,0 +1,17 @@
+seed: 42
+
+data:
+  raw_path: "data/raw/OnlineNewsPopularity.csv"
+  processed_dir: "data/processed"
+  target_col: "shares"
+  test_size: 0.2
+  random_state: 42
+
+train:
+  model_type: "random_forest"
+  n_estimators: 100
+  max_depth: 6
+  random_state: 42
+
+evaluate:
+  metrics_file: "metrics.json"

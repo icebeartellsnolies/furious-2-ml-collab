@@ -1,0 +1,39 @@
+# Data and Models (tracked by DVC, raw files ignored by Git)
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/*.dvc
+!data/raw/.gitignore
+
+data/processed/*
+!data/processed/.gitkeep
+!data/processed/*.dvc
+!data/processed/.gitignore
+
+models/*
+!models/.gitkeep
+!models/*.dvc
+!models/.gitignore
+
+# DVC cache and local config
+.dvc/cache
+.dvc/tmp
+.dvc/config.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.env
+
+# ML Tools
+mlruns/
+.ipynb_checkpoints/
+
+# Testing and Linters
+.pytest_cache/
+.ruff_cache/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
