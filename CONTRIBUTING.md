@@ -1,70 +1,38 @@
-# Contributing Guidelines - Team Furious-2
+# Contributing to Furious-2 ML Collaboration
 
-Welcome to the **Furious-2 ML Collaboration** project. To ensure reproducibility, smooth teamwork, and compliance with the MLOps assignment rubric, all team members must follow these workflow rules.
+## 🌿 Branching Model
+All work must follow a one-way flow: `feat/` $\rightarrow$ `dev` $\rightarrow$ `staging` $\rightarrow$ `main`. 
 
----
+| Branch | Purpose | Created From | Merges Into |
+|---|---|---|---|
+| **main** | Production-ready, tagged models | — | — |
+| **staging** | Release candidates for validation | main | main |
+| **dev** | Integration of finished work | main | staging |
+| **feat/** | Production code/pipeline changes | dev | dev |
+| **data/** | Dataset updates (tracked via DVC) | dev | dev |
+| **exp/** | Personal exploration/experiments | dev | Nothing (cherry-pick winner to feat/) |
+| **fix/** | Urgent production bug fixes | main | main $\rightarrow$ dev |
 
-## 1. Branching Strategy
+**Rule:** No one pushes directly to `dev`, `staging`, or `main`. All changes must arrive via Pull Request (PR).
 
-Our repository uses a strict promotion workflow:
-`feature / data / exp branches` $\longrightarrow$ `dev` $\longrightarrow$ `staging` $\longrightarrow$ `main`
+## ✍️ Commit Message Convention
+We use [Conventional Commits](https://www.conventionalcommits.org/). Every commit must start with a type:
 
-| Branch | Purpose | Base Branch | Target Branch | Protection Rules |
-| :--- | :--- | :--- | :--- | :--- |
-| `main` | Production releases (tagged e.g. `model-v1.0`) | — | — | PR only, 1 approval, passing CI, no force push |
-| `staging` | Release candidate validation (`dvc repro` reproduction) | `main` | `main` | PR only, 1 approval, passing CI |
-| `dev` | Integration branch for completed work | `main` | `staging` | PR only, 1 approval, passing CI |
-| `feat/<name>` | Production code, model features, pipeline stages | `dev` | `dev` | Delete branch after merge |
-| `data/<name>` | Dataset updates tracked with DVC | `dev` | `dev` | Delete branch after merge |
-| `exp/<member>-<idea>` | Exploration & experiments (e.g. `exp/bisma-rf-tuning`) | `dev` | *None* | Cherry-pick winner into `feat/` |
-| `fix/<name>` | Urgent production bug fixes | `main` | `main` & `dev` | Delete branch after merge |
+- `feat:` for new features or pipeline changes (e.g., `feat: add scaling step`)
+- `data:` for dataset updates or DVC changes (e.g., `data: update training split`)
+- `exp:` for experimental changes (e.g., `exp: try max_depth=10`)
+- `fix:` for bug fixes (e.g., `fix: resolve path error in data_loader`)
+- `docs:` for documentation changes
 
-> [!IMPORTANT]
-> **No Direct Pushes:** Nobody pushes directly to `dev`, `staging`, or `main`. All changes arrive through reviewed Pull Requests.
+**Example:** `feat: implement random forest baseline`
 
----
+## 🛠 Merge Strategy
+To keep the project history readable:
+- **PRs into `dev`**: We will use **Squash and Merge**. This condenses multiple "work-in-progress" commits into one clean feature commit.
+- **Promotions (`dev` $\rightarrow$ `staging` $\rightarrow$ `main`)**: We will use **Merge Commits** to preserve the release history.
 
-## 2. Commit Message Convention
-
-We follow the **Conventional Commits** specification:
-- `feat: <description>` - New features or pipeline additions (e.g. `feat: add scaling step`)
-- `data: <description>` - Dataset updates or DVC tracking (e.g. `data: track raw dataset with DVC`)
-- `exp: <description>` - Experimental configurations or explorations (e.g. `exp: try max_depth=10`)
-- `fix: <description>` - Bug fixes (e.g. `fix: handle whitespace in column names`)
-- `ci: <description>` - Continuous integration workflow changes
-- `docs: <description>` - Documentation updates (`README.md`, `REPORT.md`)
-- `chore: <description>` - Tooling, dependencies, or formatting updates
-
----
-
-## 3. Pull Request & Merge Strategy
-
-### Merge Decision
-- **PRs into `dev`:** **Rebase-merge** (or squash-merge for multi-commit work-in-progress branches) to keep a clean, linear, and readable Git history.
-- **PRs into `staging` & `main`:** Standard merge commits to preserve release milestones.
-
-### Review Checklist Requirements
-Every PR must fill out the repository template:
-1. **No Data Leakage:** Preprocessing must only be fit on training splits.
-2. **Fixed Seeds:** Seeds set for shuffling, initialization, and model training.
-3. **No Hardcoded Paths:** Use relative paths or `pathlib.Path` rooted at project base.
-4. **DVC Push Rule:** **Always run `dvc push` before `git push`** when data or model pointers change.
-5. **Clean Notebooks:** Notebook outputs must be stripped (`nbstripout`) and paired with Jupytext.
-6. **Linter & Tests Pass:** Pre-commit hooks and `pytest` must pass.
-
----
-
-## 4. Environment & DVC Setup
-
-1. Install project dependencies:
-   ```bash
-   uv sync
-   ```
-2. Pull tracked datasets and models:
-   ```bash
-   dvc pull
-   ```
-3. Run the pipeline:
-   ```bash
-   dvc repro
-   ```
+## 🚀 Data & Model Workflow (DVC)
+As this is an ML project, follow these rules:
+1. **Always** run `dvc push` before `git push` when changing data or models.
+2. Never commit raw `.csv`, `.pkl`, or `.joblib` files to Git.
+3. Use `dvc pull` after cloning or switching branches to sync data.
