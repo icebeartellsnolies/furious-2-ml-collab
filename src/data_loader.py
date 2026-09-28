@@ -53,11 +53,22 @@ def load_data(data_path: str = "data/raw/OnlineNewsPopularity.csv") -> pd.DataFr
     """
     path = Path(data_path)
     if not path.exists():
-        logger.warning(
-            "Raw dataset not found at '%s'. Falling back to synthetic verification dataset.",
-            data_path,
-        )
-        return generate_synthetic_data()
+        alternatives = [
+            Path("data/raw/dataset.csv"),
+            Path("data/raw/OnlineNewsPopularity.csv"),
+        ]
+        found = False
+        for alt in alternatives:
+            if alt.exists():
+                path = alt
+                found = True
+                break
+        if not found:
+            logger.warning(
+                "Raw dataset not found at '%s'. Falling back to synthetic verification dataset.",
+                data_path,
+            )
+            return generate_synthetic_data()
 
     logger.info("Loading dataset from %s", path)
     df = pd.read_csv(path)

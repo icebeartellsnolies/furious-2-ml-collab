@@ -1,0 +1,39 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+      - data/raw/dataset.csv
+      - src/prepare.py
+      - src/data_loader.py
+    params:
+      - seed
+      - data
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+
+  train:
+    cmd: python src/train_stage.py
+    deps:
+      - data/processed/train.csv
+      - src/train_stage.py
+      - src/features.py
+    params:
+      - seed
+      - data.target_col
+      - train
+    outs:
+      - models/model.joblib
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - data/processed/test.csv
+      - models/model.joblib
+      - src/evaluate.py
+    params:
+      - data.target_col
+      - evaluate
+    metrics:
+      - metrics.json:
+          cache: false
