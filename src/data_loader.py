@@ -14,6 +14,28 @@ logger = logging.getLogger(__name__)
 NON_PREDICTIVE_COLS = ["url", "timedelta"]
 
 
+def clean_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Clean the OnlineNewsPopularity dataset.
+    1. Remove metadata columns.
+    2. Remove zero-variance (constant) columns.
+    3. Log-transform the target 'shares' column.
+    """
+    # 1. Remove metadata
+    df = df.drop(columns=[c for c in NON_PREDICTIVE_COLS if c in df.columns])
+
+    # 2. Remove zero-variance columns
+    # ponytail: simple variance check, sufficient for this dataset size
+    constant_cols = [col for col in df.columns if df[col].nunique() <= 1]
+    df = df.drop(columns=constant_cols)
+
+    # 3. Target transformation
+    if "shares" in df.columns:
+        df["shares"] = np.log1p(df["shares"])
+
+    return df
+
+
 def generate_synthetic_data(
     num_samples: int = 200, random_state: int = 42
 ) -> pd.DataFrame:

@@ -1,0 +1,30 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python -m src.prepare
+    deps:
+    - path: data/raw/dataset.csv
+      hash: md5
+      md5: 6e6f1cfc9e03cfa1bc42dbc5c24075e7
+      size: 24311769
+    - path: params.yaml
+      hash: md5
+      md5: 713dc216eb0d4fc689be4656d03b5006
+      size: 295
+    - path: src/data_loader.py
+      hash: md5
+      md5: 1febf2bf394908a01ed6e66a9d8d9b11
+      size: 4908
+    - path: src/prepare.py
+      hash: md5
+      md5: 4386090abe5429e477e56f773b9b8473
+      size: 1235
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: a458d2ebb3b11c67811d45bfbc7ec272
+      size: 3988039
+    - path: data/processed/train.csv
+      hash: md5
+      md5: bdfcf9ab81479f8748f692afe9640a47
+      size: 15954195
