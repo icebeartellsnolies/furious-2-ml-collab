@@ -2,7 +2,7 @@
     "mae": 3009.8134,
     "rmse": 10972.2503,
     "r2": 0.0023,
-    "commit_sha": "db55dd695b11a82b8ea1b91e8c1b864c6c2e7230",
+    "commit_sha": "6e73d35f955a1fc01cf596f6f60a8bc5e1964c7e",
     "seed": 42,
     "n_test_samples": 7929,
     "hyperparameters": {
