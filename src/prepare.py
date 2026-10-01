@@ -67,10 +67,15 @@ def prepare_stage(config_path: str = "params.yaml") -> None:
     )
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """CLI entrypoint for stage 1 prepare."""
     parser = argparse.ArgumentParser(description="Stage 1: Prepare data pipeline stage")
     parser.add_argument(
         "--config", type=str, default="params.yaml", help="Path to params.yaml"
     )
     args = parser.parse_args()
     prepare_stage(config_path=args.config)
+
+
+if __name__ == "__main__":
+    main()
