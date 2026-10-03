@@ -1,13 +1,13 @@
 {
-    "mae": 3009.8134,
-    "rmse": 10972.2503,
-    "r2": 0.0023,
-    "commit_sha": "1786511f71670d04b0154b0cd408fecec4c235d9",
+    "mae": 3010.5206,
+    "rmse": 10921.8883,
+    "r2": 0.0115,
+    "commit_sha": "bc8d60b7cfbbb48dce2a523fc2ec4e3f219eda28",
     "seed": 42,
     "n_test_samples": 7929,
     "hyperparameters": {
         "model_type": "random_forest",
-        "n_estimators": 100,
-        "max_depth": 6
+        "n_estimators": 200,
+        "max_depth": 4
     }
 }
