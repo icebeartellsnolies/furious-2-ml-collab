@@ -55,8 +55,8 @@ def load_data(data_path: str = "data/raw/OnlineNewsPopularity.csv") -> pd.DataFr
     if not path.exists():
         # Check alternative common names in data/raw
         alternatives = [
-            Path("data/raw/OnlineNewsPopularity.csv"),
             Path("data/raw/dataset.csv"),
+            Path("data/raw/OnlineNewsPopularity.csv"),
         ]
         found = False
         for alt in alternatives:
