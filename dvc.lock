@@ -5,16 +5,16 @@ stages:
     deps:
     - path: data/raw/dataset.csv
       hash: md5
-      md5: 4a4d622ded66ffa8f0556261c27cee25
-      size: 14591743
+      md5: 6e6f1cfc9e03cfa1bc42dbc5c24075e7
+      size: 24311769
     - path: src/data_loader.py
       hash: md5
-      md5: 1483cfb11e2c6fdd63b333704158ee6e
-      size: 4193
+      md5: a83ee816ac4752c1c21efbec06b2e092
+      size: 4079
     - path: src/prepare.py
       hash: md5
-      md5: 78c9d77568c3e1b28440df4f0c0eff72
-      size: 2582
+      md5: c8a6d290c5520dc1a5abea71a60ee94b
+      size: 2501
     params:
       params.yaml:
         data:
@@ -46,8 +46,8 @@ stages:
       size: 2627
     - path: src/train_stage.py
       hash: md5
-      md5: dd4844082885a27fed2241f97f4fac81
-      size: 3672
+      md5: 1f736b5622b086bb715b10c0024aa4cc
+      size: 3566
     params:
       params.yaml:
         data.target_col: shares
@@ -75,8 +75,8 @@ stages:
       size: 597746
     - path: src/evaluate.py
       hash: md5
-      md5: 026d0d9a4106635c3979ef0f4ad45989
-      size: 3833
+      md5: 22b789c03088ad6d4e1939fb13177e48
+      size: 3724
     params:
       params.yaml:
         data.target_col: shares
@@ -85,5 +85,5 @@ stages:
     outs:
     - path: metrics.json
       hash: md5
-      md5: 26a41e644eb4829dd59e305ab13d56df
+      md5: 14fc9fb49cfcac8f26e783b8586de320
       size: 307
