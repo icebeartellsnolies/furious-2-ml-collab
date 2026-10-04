@@ -11,6 +11,7 @@ train:
   model_type: random_forest
   n_estimators: 200
   max_depth: 6
+  log_target: false
   random_state: 42
 
 evaluate:

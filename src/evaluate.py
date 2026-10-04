@@ -70,6 +70,9 @@ def evaluate_stage(config_path: str = "params.yaml") -> dict:
 
     # Compute evaluation metrics
     y_pred = model.predict(X_test_scaled)
+    log_target = artifact.get("log_target", False)
+    if log_target:
+        y_pred = np.expm1(y_pred)  # metrics stay on the raw shares scale
     mae = float(mean_absolute_error(y_test, y_pred))
     mse = float(mean_squared_error(y_test, y_pred))
     rmse = float(np.sqrt(mse))
@@ -88,6 +91,7 @@ def evaluate_stage(config_path: str = "params.yaml") -> dict:
             "model_type": train_cfg.get("model_type", "random_forest"),
             "n_estimators": train_cfg.get("n_estimators", 100),
             "max_depth": train_cfg.get("max_depth", 6),
+            "log_target": log_target,
         },
     }
 

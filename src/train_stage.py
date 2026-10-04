@@ -11,6 +11,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 import joblib
+import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
@@ -40,6 +41,7 @@ def train_stage(config_path: str = "params.yaml") -> None:
     n_estimators = train_cfg.get("n_estimators", 100)
     max_depth = train_cfg.get("max_depth", 6)
     model_seed = train_cfg.get("random_state", seed)
+    log_target = train_cfg.get("log_target", False)
 
     train_path = processed_dir / "train.csv"
     logger.info("Stage 2 (Train): Loading train split from %s...", train_path)
@@ -82,7 +84,8 @@ def train_stage(config_path: str = "params.yaml") -> None:
     else:
         raise ValueError(f"Unsupported model_type: '{model_type}'")
 
-    model.fit(X_train_scaled, y_train)
+    # shares is heavily right-skewed (skew ~35); optionally fit on log1p(shares)
+    model.fit(X_train_scaled, np.log1p(y_train) if log_target else y_train)
 
     # Serialize model artifact
     models_dir = Path("models")
@@ -91,6 +94,7 @@ def train_stage(config_path: str = "params.yaml") -> None:
         "model": model,
         "scaler": scaler,
         "features": feature_names,
+        "log_target": log_target,
     }
     model_path = models_dir / "model.joblib"
     joblib.dump(model_artifact, model_path)
