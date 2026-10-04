@@ -26,3 +26,7 @@ package = false
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[tool.ruff.lint.per-file-ignores]
+# stage scripts put the project root on sys.path before importing src.*
+"src/*.py" = ["E402"]
