@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytest
 import yaml
 
 from src.evaluate import evaluate_stage
@@ -7,7 +8,9 @@ from src.prepare import prepare_stage
 from src.train_stage import train_stage
 
 
-def test_dvc_pipeline_stages_end_to_end(tmp_path):
+# default (False) last so the stages leave the baseline outputs in models/ and data/processed/
+@pytest.mark.parametrize("log_target", [True, False])
+def test_dvc_pipeline_stages_end_to_end(tmp_path, log_target):
     """Verify end-to-end execution of prepare, train, and evaluate pipeline stages writing output to tmp_path."""
     with open("params.yaml", "r", encoding="utf-8") as f:
         params = yaml.safe_load(f)
@@ -16,6 +19,8 @@ def test_dvc_pipeline_stages_end_to_end(tmp_path):
     params_copy = dict(params)
     params_copy["evaluate"] = dict(params_copy.get("evaluate", {}))
     params_copy["evaluate"]["metrics_file"] = str(temp_metrics)
+
+    params_copy["train"] = {**params_copy["train"], "log_target": log_target}
 
     temp_params_path = tmp_path / "params.yaml"
     with open(temp_params_path, "w", encoding="utf-8") as f:
@@ -34,4 +39,4 @@ def test_dvc_pipeline_stages_end_to_end(tmp_path):
     assert "rmse" in metrics
     assert "r2" in metrics
     assert "commit_sha" in metrics
-    assert "hyperparameters" in metrics
+    assert metrics["hyperparameters"]["log_target"] is log_target
