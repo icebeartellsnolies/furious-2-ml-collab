@@ -11,7 +11,7 @@ Release tag: `model-v1.0` on `main`
 | Bisma Munir | [@Bisma474](https://github.com/Bisma474) | Model owner (pipeline, `params.yaml`, experiments); shared Platform work |
 
 - **Dataset:** [Online News Popularity](https://archive.ics.uci.edu/dataset/332/online+news+popularity) (UCI; Kaggle mirror: <https://www.kaggle.com/datasets/deepakshende/onlinenewspopularity>). Task: regression on `shares`.
-- **Starter code:** TODO (add the source link of the starter code that was imported in the initial commit `77056b6`).
+- **Starter code:** initial project scaffold and starter-code import by Bisma in commit [`77056b6`](https://github.com/icebeartellsnolies/furious-2-ml-collab/commit/77056b65c570e7ac79e2f41fe0cc26e38d1f8bc2).
 - **DVC remote:** shared Google Drive folder (`.dvc/config`, no credentials committed).
 
 ## 2. Reproducibility table (released model `model-v1.0`)
@@ -59,11 +59,11 @@ Baseline before tuning (depth 4, raw target): MAE 2969.13 (PR #10).
 
 **Bisma**: branch [`exp/bisma-rf-sweep`](https://github.com/icebeartellsnolies/furious-2-ml-collab/tree/exp/bisma-rf-sweep), baseline `dbc3e8c`:
 
-| Experiment | `max_depth` | MAE | RMSE | R2 |
-|---|---:|---:|---:|---:|
-| bisma-depth4 | 4 | 2969.1332 | 11967.6409 | 0.0041 |
-| bisma-depth8 | 8 | 2953.7986 | 11995.7040 | -0.0005 |
-| bisma-depth10 | 10 | 2982.0904 | 12031.9347 | -0.0066 |
+| Experiment | Rev | `max_depth` | `log_target` | MAE | RMSE | R2 |
+|---|---|---:|---|---:|---:|---:|
+| bisma-depth4 | `1e77857` | 4 | false | 2969.1332 | 11967.6409 | 0.0041 |
+| bisma-depth8 | `fa72e7e` | 8 | false | 2953.7986 | 11995.7040 | -0.0005 |
+| bisma-depth10 | `e11d11d` | 10 | false | 2982.0904 | 12031.9347 | -0.0066 |
 
 **Why log-d8 won.** Depth alone barely moves the error (best raw-target MAE 2950.8 vs 2969.1 at depth 4, about -0.6%). The target `shares` is heavily right-skewed; fitting on `log1p(shares)` cut MAE to 2303.85 (-22.4% vs the depth-4 baseline), and depth 8 was the best of the log runs. Decision rule: lowest MAE, because MAE is the metric the team reports. RMSE (+0.33% vs depth 6 raw) and R2 (about 0 for every run) did not improve, because RMSE is dominated by a few viral articles, so this tradeoff was accepted on purpose. Promoted via PR #14 (before and after table in its description).
 
@@ -92,8 +92,6 @@ pointer md5 3cda51300b152e82e02812fb772f37e2 | 21,479,227 bytes | 38,463 rows
 
 ## 5. Screenshots
 
-<!-- TODO: add the three images under docs/screenshots/ and keep the file names below. -->
-
 | Blocked 5 MB file or fake secret (pre-commit) | Failing CI check | Passing CI check |
 |---|---|---|
 | ![blocked commit](docs/screenshots/blocked-commit.png) | ![failing CI](docs/screenshots/ci-failing.png) | ![passing CI](docs/screenshots/ci-passing.png) |
@@ -119,4 +117,4 @@ pointer md5 3cda51300b152e82e02812fb772f37e2 | 21,479,227 bytes | 38,463 rows
 
 **Naimah Rehman (Data owner, Platform).** Set up the project config and `CONTRIBUTING.md` (#1), pre-commit with ruff, nbstripout, large-file check and detect-secrets (#2), DVC initialisation and the first data version (#3), the shared DVC remote (#7), the gdrive dependency fix (#8) and the CI workflow with lint, tests, data checks and smoke train (#9). Authored the data-update PR (#12) and ran the `git checkout` + `dvc checkout` demo, and ran the log-target experiments, promoted in #14 where the `params.yaml` conflict was resolved. Reviewed Bisma's PRs #4, #6 (requested changes twice, approved after fixes), #10 and #13, including running the pipeline in a worktree for #13.
 
-**Bisma Munir.** TODO (Bisma writes this paragraph: initial scaffold and starter-code import, EDA notebook with jupytext (#4), the three-stage DVC pipeline (#6), hyperparameter tuning (#10), the depth-6 change (#13), her `exp/bisma-rf-sweep` experiments, the release reproduction, and her reviews of #1, #2, #3, #7, #8, #9, #12, #14).
+**Bisma Munir (Model owner, shared Platform).** Created the initial scaffold and starter-code import in `77056b6`, added the EDA notebook paired with Jupytext (#4), built the three-stage DVC pipeline for prepare/train/evaluate (#6), tuned the random forest hyperparameters (#10), and promoted the depth-6 model change (#13). Ran the `exp/bisma-rf-sweep` experiments, reproduced the release candidate on `dev` with `dvc repro`, pushed the DVC cache, and confirmed the remote with `dvc status -c`. Reviewed Naimah's PRs #1, #2, #3, #7, #8, #9, #12, and #14, including the project setup, pre-commit, DVC setup, shared remote, dependency fix, CI workflow, data update, and log-target promotion.
