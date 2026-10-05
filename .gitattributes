@@ -1,0 +1,26 @@
+# Normalize line endings to LF on commit for all text files
+* text=auto eol=lf
+
+# Explicitly enforce LF for data files to ensure consistent DVC hashes across OS
+data/raw/*.csv text eol=lf
+data/processed/*.csv text eol=lf
+
+# Python source files
+*.py text eol=lf
+
+# Config and markup files
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.cfg text eol=lf
+*.ini text eol=lf
+
+# Binary files — never touch line endings
+*.joblib binary
+*.pkl binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ipynb text eol=lf

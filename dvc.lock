@@ -1,0 +1,90 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/raw/dataset.csv
+      hash: md5
+      md5: 3cda51300b152e82e02812fb772f37e2
+      size: 21479227
+    - path: src/data_loader.py
+      hash: md5
+      md5: a83ee816ac4752c1c21efbec06b2e092
+      size: 4079
+    - path: src/prepare.py
+      hash: md5
+      md5: c8a6d290c5520dc1a5abea71a60ee94b
+      size: 2501
+    params:
+      params.yaml:
+        data:
+          raw_path: data/raw/OnlineNewsPopularity.csv
+          processed_dir: data/processed
+          target_col: shares
+          test_size: 0.2
+          random_state: 42
+        seed: 42
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: eff73d2c7d01845def72006435397d06
+      size: 3799363
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 0e98d3fbde874e9678e5e41da28e929b
+      size: 15203327
+  train:
+    cmd: python src/train_stage.py
+    deps:
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 0e98d3fbde874e9678e5e41da28e929b
+      size: 15203327
+    - path: src/features.py
+      hash: md5
+      md5: 2874a85cd517a3d2678ef7766a9cbf21
+      size: 2562
+    - path: src/train_stage.py
+      hash: md5
+      md5: e18d30319f29daea2c6e63af55b12d7b
+      size: 3789
+    params:
+      params.yaml:
+        data.target_col: shares
+        seed: 42
+        train:
+          model_type: random_forest
+          n_estimators: 200
+          max_depth: 8
+          log_target: true
+          random_state: 42
+    outs:
+    - path: models/model.joblib
+      hash: md5
+      md5: 4f16d2ade3fc2f62d9e1c4d4994f3c3e
+      size: 6226672
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: eff73d2c7d01845def72006435397d06
+      size: 3799363
+    - path: models/model.joblib
+      hash: md5
+      md5: 4f16d2ade3fc2f62d9e1c4d4994f3c3e
+      size: 6226672
+    - path: src/evaluate.py
+      hash: md5
+      md5: 65007e1a40148be77d4cb47bd267515f
+      size: 3906
+    params:
+      params.yaml:
+        data.target_col: shares
+        evaluate:
+          metrics_file: metrics.json
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 266b656f7c87c7e434f4acd1218cfbda
+      size: 338

@@ -1,0 +1,14 @@
+{
+    "mae": 2303.8499,
+    "rmse": 12015.5376,
+    "r2": -0.0038,
+    "commit_sha": "8c801aeab9dfcd73ca47bf570146e784c9231760",
+    "seed": 42,
+    "n_test_samples": 7693,
+    "hyperparameters": {
+        "model_type": "random_forest",
+        "n_estimators": 200,
+        "max_depth": 8,
+        "log_target": true
+    }
+}

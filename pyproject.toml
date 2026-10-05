@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
+    "dvc[gdrive]>=3.67.1",
     "joblib>=1.6.0",
     "jupytext>=1.19.5",
     "nbstripout>=0.9.1",
@@ -26,3 +27,6 @@ package = false
 pythonpath = ["."]
 testpaths = ["tests"]
 
+[tool.ruff.lint.per-file-ignores]
+# stage scripts put the project root on sys.path before importing src.*
+"src/*.py" = ["E402"]
