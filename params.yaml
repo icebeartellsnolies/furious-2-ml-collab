@@ -10,7 +10,7 @@ data:
 train:
   model_type: random_forest
   n_estimators: 200
-  max_depth: 4
+  max_depth: 10
   random_state: 42
 
 evaluate:
