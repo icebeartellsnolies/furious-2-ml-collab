@@ -18,7 +18,7 @@ Release tag: `model-v1.0` on `main`
 
 | Item | Value |
 |---|---|
-| Release commit SHA (`main`, tag `model-v1.0`) | Pending until `model-v1.0` is tagged from `main`; capture with `git rev-parse model-v1.0^{commit}`. |
+| Release commit SHA (`main`, tag `model-v1.0`) | `bbd0fe1f598b2f2451400d2ccafe755895868d0b` (merge commit of PR #21; `git rev-parse model-v1.0^{commit}`) |
 | `commit_sha` logged in `metrics.json` | `8c801aeab9dfcd73ca47bf570146e784c9231760` (the code commit that produced the model, on `dev` via PR #14) |
 | `seed` / `data.random_state` / `train.random_state` | 42 / 42 / 42 |
 | `data.test_size` | 0.2 |
@@ -75,7 +75,7 @@ Baseline before tuning (depth 4, raw target): MAE 2969.13 (PR #10).
 | Conflict resolution (second author rebased and resolved `params.yaml`; documented in the PR body) | [#14](https://github.com/icebeartellsnolies/furious-2-ml-collab/pull/14), conflicting with the first merged PR [#13](https://github.com/icebeartellsnolies/furious-2-ml-collab/pull/13) |
 | "Changes requested" review | [PR #6, review 1](https://github.com/icebeartellsnolies/furious-2-ml-collab/pull/6#pullrequestreview-5366913774) and [review 2](https://github.com/icebeartellsnolies/furious-2-ml-collab/pull/6#pullrequestreview-5383542031) |
 | Release PR `dev` -> `staging` | [#19](https://github.com/icebeartellsnolies/furious-2-ml-collab/pull/19) |
-| Release PR `staging` -> `main` | [release PR search](https://github.com/icebeartellsnolies/furious-2-ml-collab/pulls?q=is%3Apr+%22release%3A+v1.0%22) |
+| Release PR `staging` -> `main` | [#21](https://github.com/icebeartellsnolies/furious-2-ml-collab/pull/21) |
 | Abandoned experiment branch | [`exp/naimah-max-depth`](https://github.com/icebeartellsnolies/furious-2-ml-collab/tree/exp/naimah-max-depth) |
 
 **Old data is recoverable.** Moving between the two dataset versions with `git checkout` + `dvc checkout`:
