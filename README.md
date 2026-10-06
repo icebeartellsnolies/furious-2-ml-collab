@@ -15,9 +15,9 @@ An end-to-end reproducible MLOps project for predicting online news article popu
 - **Goal:** Strict end-to-end reproducibility across team members: *Every result, reproducible by anyone on the team.*
 
 ### Team Furious-2 Roles
-- **Data Owner:** Bisma Munir (`@icebeartellsnolies`) - DVC management, data validation, dataset updates, split management.
-- **Model Owner:** Model Owner - Model architecture, training pipeline, hyperparameters (`params.yaml`), experiment tracking (`dvc exp`).
-- **Platform Owner:** Shared - Project scaffolding, dependency management (`uv`), CI/CD workflows, release lifecycle (`model-v1.0`).
+- **Data Owner:** Naimah Rehman (`@icebeartellsnolies`) - DVC management, data validation, dataset updates, split management.
+- **Model Owner:** Bisma Munir (`@Bisma474`) - Model architecture, training pipeline, hyperparameters (`params.yaml`), experiment tracking (`dvc exp`).
+- **Platform Owner:** Shared (Naimah Rehman and Bisma Munir) - Project scaffolding, dependency management (`uv`), CI/CD workflows, release lifecycle (`model-v1.0`).
 
 ---
 
